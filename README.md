@@ -21,11 +21,11 @@ We invoice our customers monthly on a per request basis and we want to have a re
 To get everything set up properly in order to be able to focus on the main objectives of the labs.
 
 ### Instructions
-* Check out the code from here: http://github.com/bjornn/SOASuite12c_Part3
-<code>git clone  http://github.com/bjornn/SOASuite12c_Part3</code>
+* Check out the code from here: http://github.com/bjornn/SOA12_3
+<code>git clone  http://github.com/bjornn/SOA12_3</code>
 
 * Alternatively, if you don't want to use git,  download a zip archive of the entire codebase from here:
-<code>http://github.com/bjornn/SOASuite12c_Part3/XXX.zip</code>
+<code>http://github.com/bjornn/SOA12_3/archive/master.zip</code>
 
 
 ## Lab 1: Create (or extend) a Rule component
