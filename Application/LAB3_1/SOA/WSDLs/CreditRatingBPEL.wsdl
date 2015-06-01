@@ -1,0 +1,33 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="CreditRatingBPEL"
+     targetNamespace="http://xmlns.oracle.com/SOALAB3/LAB3_1/CreditRatingBPEL"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:client="http://xmlns.oracle.com/SOALAB3/LAB3_1/CreditRatingBPEL"
+     xmlns:ns1="http://www.toycocredo.com/creditRating/v1"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:ns2="http://xmlns.oracle.com/CreditRatingRule/CreditRatingRule_DecisionService_1"
+    >
+    <plnk:partnerLinkType name="CreditRatingBPEL">
+        <plnk:role name="CreditRatingBPELProvider" portType="client:CreditRatingBPEL"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://xmlns.oracle.com/CreditRatingRule/CreditRatingRule_DecisionService_1"
+         location="https://SEC22164.ica.ia-hc.net:7102/soa-infra/services/default/LAB3_2!1.0/WSDLs/CreditRatingRule_DecisionService_1.wsdl"/>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://www.toycocredo.com/creditRating/v1" schemaLocation="../Schemas/CreditRating.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="CreditRatingBPELRequestMessage">
+        <wsdl:part name="payload" element="ns1:root"/>
+    </wsdl:message>
+    <wsdl:message name="CreditRatingBPELResponseMessage">
+        <wsdl:part name="payload" element="ns1:root"/>
+    </wsdl:message>
+    <wsdl:portType name="CreditRatingBPEL">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:CreditRatingBPELRequestMessage"/>
+            <wsdl:output message="client:CreditRatingBPELResponseMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

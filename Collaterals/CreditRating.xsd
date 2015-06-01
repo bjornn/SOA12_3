@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+  xmlns:tc="http://www.toycocredo.com/creditFact/v1"
+  targetNamespace="http://www.toycocredo.com/creditRating/v1">
+  <xs:element name="root">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="CustomerPartyId" type="xs:int" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="NewCredit" type="xs:integer" minOccurs="1" maxOccurs="1">
+           <xs:annotation>
+            <xs:documentation>The number of hard credit check hits during the last 12 months. Indicator of credit shopping.</xs:documentation>
+          </xs:annotation>
+          </xs:element>
+        <xs:element name="CreditUseCount" type="xs:integer" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>The number of credits used.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="CreditHistoryLengthMonths" type="xs:integer" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>The number of months of credit record. Longer time on record means higher predictive power of model.</xs:documentation>
+          </xs:annotation>
+        </xs:element>        
+        <xs:element name="PaymentHistoryGood" type="xs:boolean" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+            <xs:documentation>A boolean stating whether the Payment history is good (true) or bad (false).</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="AmountsOwned" type="xs:integer" minOccurs="1" maxOccurs="1">
+        <xs:annotation>
+            <xs:documentation>The monetary amount of assets.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="ScoringUncertainty" type="xs:real" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+            <xs:documentation>The uncertainty of the prediction from 0 (no uncertainty) to 100 (very uncertain). Delivered by Rules engine</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="CreditScore" type="xs:integer" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+            <xs:documentation>The resulting credit score from 0 (bad) to 100 (good). To be filled out by rules engine or human expert.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

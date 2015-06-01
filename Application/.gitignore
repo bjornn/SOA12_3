@@ -1,0 +1,13 @@
+.adf
+/*/*/SCA-INF/*
+/*/*/deploy
+/*/*/.designer
+/*/*/target
+/*/*/public_html
+/*/*/testsuites
+/target
+filebased-mds/local-mds
+filebased-mds/markers
+*.jws
+/tmp-mds
+/src/META-INF/jps-config.xml

@@ -1,0 +1,16 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="CreditRatingRule_DecisionService_1"
+     targetNamespace="http://xmlns.oracle.com/CreditRatingRule/CreditRatingRule_DecisionService_1"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:tns="http://xmlns.oracle.com/CreditRatingRule/CreditRatingRule_DecisionService_1"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="SOAPReference">
+        <plnk:role name="IDecisionService" portType="tns:IDecisionService"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://xmlns.oracle.com/CreditRatingRule/CreditRatingRule_DecisionService_1"
+         location="https://SEC22164.ica.ia-hc.net:7102/soa-infra/services/default/LAB3_2!1.0/WSDLs/CreditRatingRule_DecisionService_1.wsdl"/>
+</wsdl:definitions>

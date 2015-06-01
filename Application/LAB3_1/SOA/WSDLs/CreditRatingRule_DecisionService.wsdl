@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+     name="CreditRatingRule_DecisionService_1"
+     targetNamespace="http://xmlns.oracle.com/CreditRatingRule/CreditRatingRule_DecisionService_1"
+     xmlns:tns="http://xmlns.oracle.com/CreditRatingRule/CreditRatingRule_DecisionService_1"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+     xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+     xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+     xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"
+     xmlns:java="http://schemas.xmlsoap.org/wsdl/java/"
+     xmlns:format="http://schemas.xmlsoap.org/wsdl/formatbinding/"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <wsdl:documentation>
+        <abstractWSDL>https://SEC22164.ica.ia-hc.net:7102/soa-infra/services/default/LAB3_2!1.0/WSDLs/CreditRatingRule_DecisionService_1.wsdl</abstractWSDL>
+    </wsdl:documentation>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.oracle.com/CreditRatingRule/CreditRatingRule_DecisionService_1">
+            <include schemaLocation="../CreditRatingRule_DecisionService_1MessageTypes_1.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="callFunctionStatelessMessage">
+        <wsdl:part name="payload" element="tns:callFunctionStateless"/>
+    </wsdl:message>
+    <wsdl:message name="callFunctionStatelessDecisionMessage">
+        <wsdl:part name="payload" element="tns:callFunctionStatelessDecision"/>
+    </wsdl:message>
+    <wsdl:message name="decisionServiceError">
+        <wsdl:part name="payload" element="tns:errorInfo"/>
+    </wsdl:message>
+    <wsdl:message name="callFunctionStatefulMessage">
+        <wsdl:part name="payload" element="tns:callFunctionStateful"/>
+    </wsdl:message>
+    <wsdl:message name="callFunctionStatefulDecisionMessage">
+        <wsdl:part name="payload" element="tns:callFunctionStatefulDecision"/>
+    </wsdl:message>
+    <wsdl:portType name="IDecisionService">
+        <wsdl:operation name="callFunctionStateless">
+            <wsdl:input name="callFunctionStatelessInput" message="tns:callFunctionStatelessMessage"/>
+            <wsdl:output name="callFunctionStatelessOutput" message="tns:callFunctionStatelessDecisionMessage"/>
+            <wsdl:fault name="operationErroredFault" message="tns:decisionServiceError"/>
+        </wsdl:operation>
+        <wsdl:operation name="callFunctionStateful">
+            <wsdl:input name="callFunctionStatefulInput" message="tns:callFunctionStatefulMessage"/>
+            <wsdl:output name="callFunctionStatefulOutput" message="tns:callFunctionStatefulDecisionMessage"/>
+            <wsdl:fault name="operationErroredFault" message="tns:decisionServiceError"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="IDecisionServiceBinding" type="tns:IDecisionService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="callFunctionStateless">
+            <soap:operation style="document" soapAction="callFunctionStateless"/>
+            <wsdl:input name="callFunctionStatelessInput">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="callFunctionStatelessOutput">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="operationErroredFault">
+                <soap:fault name="operationErroredFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="callFunctionStateful">
+            <soap:operation style="document" soapAction="callFunctionStateful"/>
+            <wsdl:input name="callFunctionStatefulInput">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="callFunctionStatefulOutput">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="operationErroredFault">
+                <soap:fault name="operationErroredFault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CreditRatingRule_DecisionService_1">
+        <wsdl:port name="IDecisionService_pt" binding="tns:IDecisionServiceBinding">
+            <soap:address location="https://sec22164.ica.ia-hc.net:7102/soa-infra/services/default/LAB3_2/CreditRatingRule_DecisionService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

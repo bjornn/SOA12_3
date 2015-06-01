@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<properties>
+   <entry key="AG}-6cdae697:14dac55803a:-7b15">Uncertainty Lowers Score</entry>
+   <entry key="DG}-6cdae697:14dac55803a:-7b15">If uncertaintyLevel is over 50 then the credit score is lowered 10 units.</entry>
+   <entry key="AG}-6cdae697:14dac55803a:-7c16">BadCreditHistoryPenaltyWeight</entry>
+   <entry key="AG}-6cdae697:14dac55803a:-7c23">CreditRecordLength</entry>
+   <entry key="DG}-6cdae697:14dac55803a:-7c21">If the number of new credit requests are more than 2 during the last 12 months then lower the certainty of the score and the score.</entry>
+   <entry key="AG}-6cdae697:14dac55803a:-7c24">CreditHistory1</entry>
+   <entry key="DG}-6cdae697:14dac55803a:-7c22">If new credit requests are more than 2 during the last 12 months then lower the certainty of the score and the score.</entry>
+   <entry key="AG}-6cdae697:14dac55803a:-7c21">New Credit Requests</entry>
+   <entry key="DG}-6cdae697:14dac55803a:-7c23">If the credit history record lenght is longer than 6 month lower uncertainty.</entry>
+   <entry key="DG}-6cdae697:14dac55803a:-7c24">If the credit history is not good then lower the credit score</entry>
+</properties>

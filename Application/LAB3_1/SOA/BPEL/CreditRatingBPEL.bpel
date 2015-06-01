@@ -1,0 +1,169 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Mon Jun 01 01:03:03 CEST 2015
+  Author:  extbna
+  Type: BPEL 2.0 Process
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="CreditRatingBPEL"
+               targetNamespace="http://xmlns.oracle.com/SOALAB3/LAB3_1/CreditRatingBPEL"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/SOALAB3/LAB3_1/CreditRatingBPEL"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:ui="http://xmlns.oracle.com/soa/designer"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://www.toycocredo.com/creditRating/v1"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:ess="http://xmlns.oracle.com/scheduler"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:ns2="http://xmlns.oracle.com/CreditRatingRule/CreditRatingRule_DecisionService_1">
+  <import namespace="http://xmlns.oracle.com/CreditRatingRule/CreditRatingRule_DecisionService_1"
+          location="https://SEC22164.ica.ia-hc.net:7102/soa-infra/services/default/LAB3_2!1.0/WSDLs/CreditRatingRule_DecisionService_1.wsdl"
+          importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <import ui:processWSDL="true" namespace="http://xmlns.oracle.com/SOALAB3/LAB3_1/CreditRatingBPEL" location="../WSDLs/CreditRatingBPEL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!-- 
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        PARTNERLINKS                                                      
+        List of services participating in this BPEL process               
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="creditratingbpel_client" partnerLinkType="client:CreditRatingBPEL" myRole="CreditRatingBPELProvider"/>
+    <partnerLink name="SOAPReference" partnerLinkType="ns2:SOAPReference" partnerRole="IDecisionService"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:CreditRatingBPELRequestMessage"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="client:CreditRatingBPELResponseMessage"/>
+    <variable name="Invoke1_callFunctionStateless_InputVariable" messageType="ns2:callFunctionStatelessMessage"/>
+    <variable name="Invoke1_callFunctionStateless_OutputVariable"
+              messageType="ns2:callFunctionStatelessDecisionMessage"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in CreditRatingBPEL.wsdl) -->
+    <receive name="receiveInput" partnerLink="creditratingbpel_client" portType="client:CreditRatingBPEL" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="initiate">
+      <copy>
+        <from>$inputVariable.payload/ns1:CustomerPartyId</from>
+        <to>$inputVariable.payload/ns1:CustomerPartyId</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns1:NewCredit</from>
+        <to>$inputVariable.payload/ns1:NewCredit</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns1:CreditUseCount</from>
+        <to>$inputVariable.payload/ns1:CreditUseCount</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns1:CreditHistoryLengthMonths</from>
+        <to>$inputVariable.payload/ns1:CreditHistoryLengthMonths</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns1:PaymentHistoryGood</from>
+        <to>$inputVariable.payload/ns1:PaymentHistoryGood</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns1:AmountsOwned</from>
+        <to>$inputVariable.payload/ns1:AmountsOwned</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns1:ScoringUncertainty</from>
+        <to>$inputVariable.payload/ns1:ScoringUncertainty</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns1:CreditScore</from>
+        <to>$inputVariable.payload/ns1:CreditScore</to>
+      </copy>
+    </assign>
+    <empty name="callRatingEngine"/>
+    <invoke name="Invoke1" bpelx:invokeAsDetail="no" partnerLink="SOAPReference" portType="ns2:IDecisionService"
+            operation="callFunctionStateless" inputVariable="Invoke1_callFunctionStateless_InputVariable"
+            outputVariable="Invoke1_callFunctionStateless_OutputVariable"/>
+    <if name="If1">
+      <documentation>
+        <![CDATA[Uncertain score]]>
+      </documentation>
+      <condition>$Invoke1_callFunctionStateless_OutputVariable.payload/ns2:resultList/ns1:root/ns1:ScoringUncertainty &gt; 50</condition>
+      <empty name="callHumanWorkflow"/>
+      <else>
+        <documentation>
+          <![CDATA[Certain Score]]>
+        </documentation>
+        <empty name="doNothing"/>
+      </else>
+    </if>
+    <assign name="Assign1">
+      <copy>
+        <from>$Invoke1_callFunctionStateless_OutputVariable.payload/ns2:resultList/ns1:root/ns1:CustomerPartyId</from>
+        <to>$outputVariable.payload/ns1:CustomerPartyId</to>
+      </copy>
+      <copy>
+        <from>$Invoke1_callFunctionStateless_OutputVariable.payload/ns2:resultList/ns1:root/ns1:NewCredit</from>
+        <to>$outputVariable.payload/ns1:NewCredit</to>
+      </copy>
+      <copy>
+        <from>$Invoke1_callFunctionStateless_OutputVariable.payload/ns2:resultList/ns1:root/ns1:CreditUseCount</from>
+        <to>$outputVariable.payload/ns1:CreditUseCount</to>
+      </copy>
+      <copy>
+        <from>$Invoke1_callFunctionStateless_OutputVariable.payload/ns2:resultList/ns1:root/ns1:CreditHistoryLengthMonths</from>
+        <to>$outputVariable.payload/ns1:CreditHistoryLengthMonths</to>
+      </copy>
+      <copy>
+        <from>$Invoke1_callFunctionStateless_OutputVariable.payload/ns2:resultList/ns1:root/ns1:PaymentHistoryGood</from>
+        <to>$outputVariable.payload/ns1:PaymentHistoryGood</to>
+      </copy>
+      <copy>
+        <from>$Invoke1_callFunctionStateless_OutputVariable.payload/ns2:resultList/ns1:root/ns1:AmountsOwned</from>
+        <to>$outputVariable.payload/ns1:AmountsOwned</to>
+      </copy>
+      <copy>
+        <from>$Invoke1_callFunctionStateless_OutputVariable.payload/ns2:resultList/ns1:root/ns1:ScoringUncertainty</from>
+        <to>$outputVariable.payload/ns1:ScoringUncertainty</to>
+      </copy>
+      <copy>
+        <from>$Invoke1_callFunctionStateless_OutputVariable.payload/ns2:resultList/ns1:root/ns1:CreditScore</from>
+        <to>$outputVariable.payload/ns1:CreditScore</to>
+      </copy>
+    </assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="creditratingbpel_client" portType="client:CreditRatingBPEL" operation="process"
+           variable="outputVariable"/>
+  </sequence>
+</process>
